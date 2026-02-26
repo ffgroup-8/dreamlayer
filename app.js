@@ -6,9 +6,7 @@
 // type: 'stream' = direct Broadcastify CDN stream
 // type: 'openmhz' = OpenMHz call-based feed (plays recorded calls sequentially)
 const SCANNER_FEEDS = [
-    { city: 'Los Angeles',   state: 'CA', desc: 'LAPD Dispatch',     type: 'stream',  url: 'https://broadcastify.cdnstream1.com/22406' },
-    { city: 'Dallas',        state: 'TX', desc: 'Police & Fire',     type: 'openmhz', system: 'ntirnd1' },
-    { city: 'Philadelphia',  state: 'PA', desc: 'Police Citywide',   type: 'stream',  url: 'https://broadcastify.cdnstream1.com/4603'  },
+    { city: 'Dallas',  state: 'TX', desc: 'Police & Fire',  type: 'openmhz', system: 'ntirnd1' },
 ];
 
 // --- SoundCloud playlists per listening mode ---
