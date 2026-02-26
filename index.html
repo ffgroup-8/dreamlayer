@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>siren.fm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Animated background orbs -->
+    <div class="atmosphere" id="atmosphere" data-mode="ambient">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+
+    <header class="header">
+        <h1 class="logo">siren<span class="logo-accent">.fm</span></h1>
+        <p class="tagline">tune into the night</p>
+    </header>
+
+    <main class="container">
+
+        <!-- Scanner Panel -->
+        <section class="panel scanner-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="2"/>
+                        <path d="M16.24 7.76a6 6 0 010 8.49"/>
+                        <path d="M19.07 4.93a10 10 0 010 14.14"/>
+                        <path d="M7.76 16.24a6 6 0 010-8.49"/>
+                        <path d="M4.93 19.07a10 10 0 010-14.14"/>
+                    </svg>
+                    <span>SCANNER</span>
+                </div>
+                <div class="live-badge hidden" id="scanner-live">
+                    <span class="live-dot"></span>
+                    LIVE
+                </div>
+            </div>
+
+            <div class="feed-selector">
+                <select id="feed-select" class="select-input">
+                    <option value="" disabled selected>Select a city...</option>
+                </select>
+            </div>
+
+            <div class="status-line" id="scanner-status">
+                <span class="status-text">Select a city to begin</span>
+            </div>
+
+            <div class="visualizer" id="scanner-viz">
+                <!-- JS generated -->
+            </div>
+
+            <div class="controls">
+                <button class="btn-play" id="scanner-play" disabled>
+                    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16" rx="1"/>
+                        <rect x="14" y="4" width="4" height="16" rx="1"/>
+                    </svg>
+                </button>
+
+                <div class="volume-group">
+                    <svg class="volume-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+                        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" opacity="0.6"/>
+                    </svg>
+                    <input type="range" class="volume-slider" id="scanner-volume" min="0" max="100" value="70">
+                </div>
+            </div>
+
+            <audio id="scanner-audio" preload="none"></audio>
+        </section>
+
+        <!-- Divider -->
+        <div class="divider">
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- Ambient Panel -->
+        <section class="panel ambient-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                    </svg>
+                    <span id="mode-label">AMBIENT</span>
+                </div>
+            </div>
+
+            <div class="mode-selector" id="mode-selector">
+                <label class="mode-btn">
+                    <input type="radio" name="mode" value="ambient" checked>
+                    <span>Ambient</span>
+                </label>
+                <label class="mode-btn">
+                    <input type="radio" name="mode" value="synthwave">
+                    <span>Synthwave</span>
+                </label>
+                <label class="mode-btn">
+                    <input type="radio" name="mode" value="zen">
+                    <span>Zen</span>
+                </label>
+            </div>
+
+            <div class="track-display">
+                <div class="track-title" id="track-title">Ready to play</div>
+                <div class="track-artist" id="track-artist">Shuffle through ambient tracks</div>
+            </div>
+
+            <div class="visualizer" id="ambient-viz">
+                <!-- JS generated -->
+            </div>
+
+            <div class="controls">
+                <button class="btn-skip" id="ambient-prev">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                    </svg>
+                </button>
+
+                <button class="btn-play" id="ambient-play">
+                    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16" rx="1"/>
+                        <rect x="14" y="4" width="4" height="16" rx="1"/>
+                    </svg>
+                </button>
+
+                <button class="btn-skip" id="ambient-next">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                    </svg>
+                </button>
+
+                <div class="volume-group">
+                    <svg class="volume-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+                        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" opacity="0.6"/>
+                    </svg>
+                    <input type="range" class="volume-slider" id="ambient-volume" min="0" max="100" value="50">
+                </div>
+            </div>
+
+            <iframe id="sc-widget"
+                    allow="autoplay"
+                    src="about:blank"
+                    style="position:absolute;width:0;height:0;border:0;overflow:hidden;">
+            </iframe>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>headphones recommended</p>
+    </footer>
+
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
