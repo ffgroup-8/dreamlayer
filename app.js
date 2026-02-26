@@ -321,6 +321,7 @@ class AmbientPlayer {
         this.trackCount = 0;
 
         createVisualizer(this.vizContainer, 32, 'ambient');
+        this.panel.classList.add('mode-ambient');
         this.bindEvents();
         this.bootWidget();
     }
@@ -445,9 +446,11 @@ class AmbientPlayer {
         this.ready = false;
         this.switching = true;
 
-        // Update header label and background
+        // Update header label, background, and panel mode class
         this.modeLabel.textContent = mode.toUpperCase();
         this.atmosphere.dataset.mode = mode;
+        this.panel.classList.remove('mode-ambient', 'mode-synthwave', 'mode-zen');
+        this.panel.classList.add('mode-' + mode);
 
         this.titleEl.textContent = 'Loading playlist...';
         this.artistEl.textContent = '';
