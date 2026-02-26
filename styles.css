@@ -51,6 +51,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* ---- Atmospheric background (orbs) ---- */
@@ -541,38 +542,44 @@ body::after {
     background: var(--surface-active);
     outline: none;
     cursor: pointer;
+    padding: 14px 0;
+    margin: -14px 0;
+    background-clip: content-box;
+    touch-action: none;
 }
 
 .volume-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 14px;
-    height: 14px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     background: var(--text-secondary);
-    border: none;
+    border: 2px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
     transition: background 0.2s var(--ease), transform 0.2s var(--ease);
 }
 
 .volume-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
+    transform: scale(1.15);
 }
 
-.scanner-panel .volume-slider::-webkit-slider-thumb:hover {
+.scanner-panel .volume-slider::-webkit-slider-thumb:hover,
+.scanner-panel .volume-slider::-webkit-slider-thumb:active {
     background: var(--scanner);
 }
 
-.ambient-panel .volume-slider::-webkit-slider-thumb:hover {
+.ambient-panel .volume-slider::-webkit-slider-thumb:hover,
+.ambient-panel .volume-slider::-webkit-slider-thumb:active {
     background: var(--ambient);
 }
 
 .volume-slider::-moz-range-thumb {
-    width: 14px;
-    height: 14px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     background: var(--text-secondary);
-    border: none;
+    border: 2px solid rgba(255, 255, 255, 0.1);
     cursor: pointer;
 }
 
@@ -697,6 +704,18 @@ body::after {
 /* ---- Responsive ---- */
 
 @media (max-width: 768px) {
+    html, body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto;
+        min-height: 100%;
+    }
+
+    body {
+        justify-content: flex-start;
+        padding: 40px 0 32px;
+    }
+
     .container {
         flex-direction: column;
         width: 95vw;
@@ -737,5 +756,24 @@ body::after {
 
     .footer {
         margin-top: 24px;
+    }
+
+    /* Larger touch targets for mobile */
+    .btn-play {
+        width: 58px;
+        height: 58px;
+    }
+
+    .btn-skip {
+        width: 42px;
+        height: 42px;
+    }
+
+    .mode-btn span {
+        padding: 12px 12px;
+    }
+
+    .volume-group {
+        max-width: 200px;
     }
 }

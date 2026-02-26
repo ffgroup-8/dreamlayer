@@ -99,6 +99,7 @@ class ScannerPlayer {
         this.select.addEventListener('change', () => this.onFeedChange());
         this.playBtn.addEventListener('click', () => this.togglePlay());
         this.volumeSlider.addEventListener('input', () => this.onVolume());
+        this.volumeSlider.addEventListener('change', () => this.onVolume());
 
         this.audio.addEventListener('playing', () => {
             this.liveBadge.classList.remove('hidden');
@@ -329,8 +330,9 @@ class AmbientPlayer {
         this.nextBtn.addEventListener('click', () => this.next());
         this.prevBtn.addEventListener('click', () => this.prev());
         this.volumeSlider.addEventListener('input', () => this.onVolume());
+        this.volumeSlider.addEventListener('change', () => this.onVolume());
 
-        // Mode switching
+        // Mode switching — use click instead of change for better iOS gesture handling
         document.querySelectorAll('input[name="mode"]').forEach(radio => {
             radio.addEventListener('change', (e) => this.switchMode(e.target.value));
         });
@@ -401,12 +403,32 @@ class AmbientPlayer {
             if (this.trackCount > 0) {
                 this.shuffledOrder = shuffleIndices(this.trackCount);
                 this.shufflePos = 0;
-                this.widget.skip(this.shuffledOrder[0]);
-                setTimeout(() => {
-                    this.switching = false;
-                    this.updateTrackInfo();
-                    if (this.isPlaying) this.widget.play();
-                }, 800);
+
+                const targetIndex = this.shuffledOrder[0];
+
+                // Skip to a random track, then play immediately
+                // Use a short delay for the widget to register the skip,
+                // then bind to PLAY_PROGRESS to confirm playback and update info
+                this.widget.skip(targetIndex);
+
+                if (this.isPlaying) {
+                    // Call play() repeatedly to overcome mobile autoplay restrictions
+                    this.widget.play();
+                    setTimeout(() => {
+                        this.widget.play();
+                        this.switching = false;
+                        this.updateTrackInfo();
+                    }, 400);
+                    setTimeout(() => {
+                        this.widget.play();
+                        this.updateTrackInfo();
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        this.switching = false;
+                        this.updateTrackInfo();
+                    }, 800);
+                }
             } else {
                 this.switching = false;
                 this.titleEl.textContent = 'No tracks loaded';
@@ -447,6 +469,9 @@ class AmbientPlayer {
                     this.ready = true;
                     this.isPlaying = shouldPlay;
                     this.widget.setVolume(parseInt(this.volumeSlider.value));
+                    // Immediately call play before onPlaylistLoaded
+                    // to maintain user-gesture context on mobile
+                    if (shouldPlay) this.widget.play();
                     this.onPlaylistLoaded();
                 }
             });
