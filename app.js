@@ -16,7 +16,6 @@ const SCANNER_FEEDS = [
 const MODE_PLAYLISTS = {
     ambient: [
         'https://soundcloud.com/apple_fish/sets/deep-space-ambient',
-        'https://soundcloud.com/worldbeatjeremy/sets/space-dreams-ambient-drone',
     ],
     synthwave: [
         'https://soundcloud.com/chinosynth/sets/chino-synthwave-selection',
